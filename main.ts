@@ -1,4 +1,6 @@
 namespace creatures {
+    //% blockId=setNewPosition
+    //% block="set postion frontback: %string %side %string %joint %string %position"
     export function setNewPosition (frontback: string, side: string, joint: string, position: string) {
     let newPositions: number[] = []
     multiplier = 1
