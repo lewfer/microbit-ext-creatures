@@ -22,29 +22,51 @@ namespace creatures {
     //% blockId=setNewPosition
     //% block="set position %frontback %side %joint %position"
     export function setNewPosition(frontback: enumFrontBack, side: enumSide, joint: enumJoint, position: enumDirection) {
-    let newPositions: number[] = []
-    multiplier = 1
-        if (side == enumSide.left) {
+        let newPositions: number[] = []
         multiplier = 1
-    } else {
-        multiplier = -1
+            if (side == enumSide.left) {
+            multiplier = 1
+        } else {
+            multiplier = -1
+        }
+            if (position == enumDirection.forward) {
+            _newAngle = HIPFORWARD
+            } else if (position == enumDirection.backward) {
+            _newAngle = HIPBACKWARD
+            } else if (position == enumDirection.up) {
+            _newAngle = KNEEUP
+            } else if (position == enumDirection.down) {
+            _newAngle = KNEEDOWN
+        } else {
+            _newAngle = 90
+        }
+        _newAngle = 90 + _newAngle * multiplier
+        _idx = getIndex(frontback, side, joint)
+        newPositions[_idx] = _newAngle
+        serial.writeLine("" + _idx + "," + _newAngle)
     }
-        if (position == enumDirection.forward) {
-        _newAngle = HIPFORWARD
-        } else if (position == enumDirection.backward) {
-        _newAngle = HIPBACKWARD
-        } else if (position == enumDirection.up) {
-        _newAngle = KNEEUP
-        } else if (position == enumDirection.down) {
-        _newAngle = KNEEDOWN
-    } else {
-        _newAngle = 90
+
+    //% blockId=smoothMoveTogether
+    //% block="smooth move"
+    export function smoothMoveTogether() {
+        deltas = [
+            0,
+            (newPositions[1] - positions[1]),
+            (newPositions[2] - positions[2]),
+            (newPositions[3] - positions[3]),
+            (newPositions[4] - positions[4]),
+            (newPositions[5] - positions[5]),
+            (newPositions[6] - positions[6]),
+            (newPositions[7] - positions[7]),
+            (newPositions[8] - positions[8])
+        ]
+        for (let _idx = 0; _idx <= numSteps - 1; _idx++) {
+            //limitedMove(1, positions[1])
+            positions[1] = easeServo(1, positions[1], deltas[1], _idx / numSteps)
+            serial.writeLine("position" + deltas[1] + "," + positions[1])
+            basic.pause(20)
+        }
     }
-    _newAngle = 90 + _newAngle * multiplier
-    _idx = getIndex(frontback, side, joint)
-    newPositions[_idx] = _newAngle
-    serial.writeLine("" + _idx + "," + _newAngle)
-}
     function getIndex(frontback: enumFrontBack, side: enumSide, joint: enumJoint) {
         if (frontback == enumFrontBack.front) {
             if (side == enumSide.left) {
@@ -101,27 +123,6 @@ function limitedMove (servo: number, angle: number) {
         Kitronik_Robotics_Board.servoWrite(Kitronik_Robotics_Board.Servos.Servo7, _newAngle)
     } else if (servo == 8) {
         Kitronik_Robotics_Board.servoWrite(Kitronik_Robotics_Board.Servos.Servo8, _newAngle)
-    }
-}
-//% blockId=smoothMoveTogether
-//% block="smooth move"
-function smoothMoveTogether() {
-    deltas = [
-        0,
-        (newPositions[1] - positions[1]),
-        (newPositions[2] - positions[2]),
-        (newPositions[3] - positions[3]),
-        (newPositions[4] - positions[4]),
-        (newPositions[5] - positions[5]),
-        (newPositions[6] - positions[6]),
-        (newPositions[7] - positions[7]),
-        (newPositions[8] - positions[8])
-    ]
-    for (let _idx = 0; _idx <= numSteps - 1; _idx++) {
-        //limitedMove(1, positions[1])
-        positions[1] = easeServo(1, positions[1], deltas[1], _idx/numSteps)
-        serial.writeLine("position" + deltas[1] + "," + positions[1])
-        basic.pause(20)
     }
 }
 
