@@ -1,4 +1,5 @@
-function setNewPosition (frontback: string, side: string, joint: string, position: string) {
+namespace creatures {
+    export function setNewPosition (frontback: string, side: string, joint: string, position: string) {
     let newPositions: number[] = []
     multiplier = 1
     if (side == "left") {
@@ -97,3 +98,4 @@ setNewPosition("front", "left", "hip", "forward")
 basic.forever(function () {
 	
 })
+}
