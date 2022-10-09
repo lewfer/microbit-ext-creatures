@@ -24,18 +24,18 @@ namespace creatures {
     export function setNewPosition(frontback: enumFrontBack, side: enumSide, joint: enumJoint, position: enumDirection) {
         let newPositions: number[] = []
         multiplier = 1
-            if (side == enumSide.left) {
+        if (side == enumSide.left) {
             multiplier = 1
         } else {
             multiplier = -1
         }
-            if (position == enumDirection.forward) {
+        if (position == enumDirection.forward) {
             _newAngle = HIPFORWARD
-            } else if (position == enumDirection.backward) {
+        } else if (position == enumDirection.backward) {
             _newAngle = HIPBACKWARD
-            } else if (position == enumDirection.up) {
+        } else if (position == enumDirection.up) {
             _newAngle = KNEEUP
-            } else if (position == enumDirection.down) {
+        } else if (position == enumDirection.down) {
             _newAngle = KNEEDOWN
         } else {
             _newAngle = 90
@@ -43,7 +43,7 @@ namespace creatures {
         _newAngle = 90 + _newAngle * multiplier
         _idx = getIndex(frontback, side, joint)
         newPositions[_idx] = _newAngle
-        serial.writeLine("" + _idx + "," + _newAngle)
+        serial.writeLine("set " + _idx + "," + _newAngle)
     }
 
     //% blockId=smoothMoveTogether
@@ -129,7 +129,7 @@ function limitedMove (servo: number, angle: number) {
 // t must be between 0 and 1
 function easeServo(servo: number, current: number, delta: number, t: number) {
     _newAngle = current + delta * t * (2 - t) 
-    serial.writeLine("" + (_newAngle))
+    serial.writeLine("ease" + (_newAngle))
     return _newAngle
 }
 
