@@ -1,21 +1,40 @@
+enum enumFrontBack {
+    front,
+    back
+}
+enum enumSide {
+    left,
+    right
+}
+enum enumJoint {
+    hip,
+    knee
+}
+enum enumDirection {
+    forward,
+    backward,
+    up,
+    down,
+    middle
+}
 namespace creatures {
     //% blockId=setNewPosition
-    //% block="set postion frontback: %string %side %string %joint %string %position"
-    export function setNewPosition (frontback: string, side: string, joint: string, position: string) {
+    //% block="set position %frontback %side %joint %position"
+    export function setNewPosition(frontback: enumFrontBack, side: enumSide, joint: enumJoint, position: enumDirection) {
     let newPositions: number[] = []
     multiplier = 1
-    if (side == "left") {
+        if (side == enumSide.left) {
         multiplier = 1
     } else {
         multiplier = -1
     }
-    if (position == "forward") {
+        if (position == enumDirection.forward) {
         _newAngle = HIPFORWARD
-    } else if (position == "backward") {
+        } else if (position == enumDirection.backward) {
         _newAngle = HIPBACKWARD
-    } else if (position == "up") {
+        } else if (position == enumDirection.up) {
         _newAngle = KNEEUP
-    } else if (position == "down") {
+        } else if (position == enumDirection.down) {
         _newAngle = KNEEDOWN
     } else {
         _newAngle = 90
@@ -25,30 +44,30 @@ namespace creatures {
     newPositions[_idx] = _newAngle
     serial.writeLine("" + _idx + "," + _newAngle)
 }
-function getIndex (frontback: string, side: string, joint: string) {
-    if (frontback == "front") {
-        if (side == "left") {
-            if (joint == "hip") {
+    function getIndex(frontback: enumFrontBack, side: enumSide, joint: enumJoint) {
+        if (frontback == enumFrontBack.front) {
+            if (side == enumSide.left) {
+                if (joint == enumJoint.hip) {
                 _idx = 1
             } else {
                 _idx = 2
             }
         } else {
-            if (joint == "hip") {
+                if (joint == enumJoint.hip) {
                 _idx = 3
             } else {
                 _idx = 4
             }
         }
     } else {
-        if (side == "left") {
-            if (joint == "hip") {
+            if (side == enumSide.left) {
+                if (joint == enumJoint.hip) {
                 _idx = 5
             } else {
                 _idx = 6
             }
         } else {
-            if (joint == "hip") {
+                if (joint == enumJoint.hip) {
                 _idx = 7
             } else {
                 _idx = 8
@@ -96,7 +115,7 @@ HIPFORWARD = 20
 HIPBACKWARD = 40
 KNEEUP = 0
 KNEEDOWN = 30
-setNewPosition("front", "left", "hip", "forward")
+    setNewPosition(enumFrontBack.front, enumSide.left, enumJoint.hip, enumDirection.forward)
 basic.forever(function () {
 	
 })
