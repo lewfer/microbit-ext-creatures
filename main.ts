@@ -17,6 +17,7 @@ enum enumDirection {
     down,
     middle
 }
+//% color="#ff7f50" icon="\uf06e" block="CrawlBot"
 namespace creatures {
     //% blockId=setNewPosition
     //% block="set position %frontback %side %joint %position"
@@ -102,6 +103,35 @@ function limitedMove (servo: number, angle: number) {
         Kitronik_Robotics_Board.servoWrite(Kitronik_Robotics_Board.Servos.Servo8, _newAngle)
     }
 }
+//% blockId=smoothMoveTogether
+//% block="smooth move"
+function smoothMoveTogether() {
+    deltas = [
+        0,
+        (newPositions[1] - positions[1]),
+        (newPositions[2] - positions[2]),
+        (newPositions[3] - positions[3]),
+        (newPositions[4] - positions[4]),
+        (newPositions[5] - positions[5]),
+        (newPositions[6] - positions[6]),
+        (newPositions[7] - positions[7]),
+        (newPositions[8] - positions[8])
+    ]
+    for (let _idx = 0; _idx <= numSteps - 1; _idx++) {
+        //limitedMove(1, positions[1])
+        positions[1] = easeServo(1, positions[1], deltas[1], _idx/numSteps)
+        serial.writeLine("position" + deltas[1] + "," + positions[1])
+        basic.pause(20)
+    }
+}
+
+// t must be between 0 and 1
+function easeServo(servo: number, current: number, delta: number, t: number) {
+    _newAngle = current + delta * t * (2 - t) 
+    serial.writeLine("" + (_newAngle))
+    return _newAngle
+}
+
 let _idx = 0
 let _newAngle = 0
 let multiplier = 0
@@ -110,6 +140,8 @@ let KNEEUP = 0
 let HIPBACKWARD = 0
 let HIPFORWARD = 0
 let positions: number[] = []
+let newPositions: number[] = []
+let deltas: number[] = []
 let numSteps = 50
 HIPFORWARD = 20
 HIPBACKWARD = 40
