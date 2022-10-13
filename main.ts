@@ -72,6 +72,10 @@ namespace creatures {
             newAngle2 = KNEEUP
         } else if (direction == enumKneeDirection.down) {
             newAngle2 = KNEEDOWN
+        } else if (direction == enumKneeDirection.upmore) {
+            newAngle2 = KNEEUPMORE
+        } else if (direction == enumKneeDirection.downmore) {
+            newAngle2 = KNEEDOWNMORE
         } else {
             newAngle2 = 0
         }
