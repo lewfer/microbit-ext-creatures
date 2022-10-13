@@ -376,7 +376,7 @@ namespace creatures {
     //% group="Standard offsets"
     //% weight=30
     export function setKneeUpMoreOffset(offset: number) {
-        KNEEUP = offset
+        KNEEUPMORE = offset
     }
 
     //% blockId=setKneeDownMOreOffset
@@ -385,7 +385,7 @@ namespace creatures {
     //% group="Standard offsets"
     //% weight=20
     export function setKneeDownMoreOffset(offset: number) {
-        KNEEDOWN = offset
+        KNEEDOWNMORE = offset
     }
 
     //% blockId=setSmoothness
