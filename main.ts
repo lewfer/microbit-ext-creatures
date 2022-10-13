@@ -370,6 +370,24 @@ namespace creatures {
         KNEEDOWN = offset
     }
 
+    //% blockId=setKneeUpMoreOffset
+    //% block="set knee upmore offset %offset"
+    //% offset.min=-70 offset.max=70
+    //% group="Standard offsets"
+    //% weight=30
+    export function setKneeUpMoreOffset(offset: number) {
+        KNEEUP = offset
+    }
+
+    //% blockId=setKneeDownMOreOffset
+    //% block="set knee downmore offset %offset"
+    //% offset.min=-70 offset.max=70
+    //% group="Standard offsets"
+    //% weight=20
+    export function setKneeDownMoreOffset(offset: number) {
+        KNEEDOWN = offset
+    }
+
     //% blockId=setSmoothness
     //% block="set smoothness %steps"
     //% angle.steps=1 steps.max=50
@@ -395,7 +413,7 @@ namespace creatures {
     KNEEUPMORE = -20
     KNEEUP = 0
     KNEEDOWN = 30
-    KNEEDOWNMORE = 60
+    KNEEDOWNMORE = 40
     for (let servo3 = 1; servo3 <= 8; servo3++) {
         limitedMove(servo3, rawAngles[servo3])
     }
