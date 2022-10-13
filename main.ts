@@ -17,14 +17,16 @@ enum enumDirection {
 }
 enum enumHipDirection {
     forward,
-    backward,
+    back,
+    forwardMore,
+    backMore,
     middle
 }
 enum enumKneeDirection {
     up,
     down,
-    upmore,
-    downmore,
+    upMore,
+    downMore,
     middle
 }
 namespace creatures {
@@ -44,8 +46,12 @@ namespace creatures {
         }
         if (direction == enumHipDirection.forward) {
             newAngle = HIPFORWARD
-        } else if (direction == enumHipDirection.backward) {
-            newAngle = HIPBACKWARD
+        } else if (direction == enumHipDirection.back) {
+            newAngle = HIPBACK
+        } else if (direction == enumHipDirection.forwardMore) {
+            newAngle = HIPFORWARDMORE
+        } else if (direction == enumHipDirection.backMore) {
+            newAngle = HIPBACKMORE
         } else {
             newAngle = 0
         }
@@ -72,9 +78,9 @@ namespace creatures {
             newAngle2 = KNEEUP
         } else if (direction == enumKneeDirection.down) {
             newAngle2 = KNEEDOWN
-        } else if (direction == enumKneeDirection.upmore) {
+        } else if (direction == enumKneeDirection.upMore) {
             newAngle2 = KNEEUPMORE
-        } else if (direction == enumKneeDirection.downmore) {
+        } else if (direction == enumKneeDirection.downMore) {
             newAngle2 = KNEEDOWNMORE
         } else {
             newAngle2 = 0
@@ -100,8 +106,12 @@ namespace creatures {
         }
         if (direction == enumHipDirection.forward) {
             newAngle3 = HIPFORWARD
-        } else if (direction == enumHipDirection.backward) {
-            newAngle3 = HIPBACKWARD
+        } else if (direction == enumHipDirection.back) {
+            newAngle3 = HIPBACK
+        } else if (direction == enumHipDirection.forwardMore) {
+            newAngle3 = HIPFORWARDMORE
+        } else if (direction == enumHipDirection.backMore) {
+            newAngle3 = HIPBACKMORE
         } else {
             newAngle3 = 0
         }
@@ -130,9 +140,9 @@ namespace creatures {
             newAngle4 = KNEEUP
         } else if (direction == enumKneeDirection.down) {
             newAngle4 = KNEEDOWN
-        } else if (direction == enumKneeDirection.upmore) {
+        } else if (direction == enumKneeDirection.upMore) {
             newAngle4 = KNEEUPMORE
-        } else if (direction == enumKneeDirection.downmore) {
+        } else if (direction == enumKneeDirection.downMore) {
             newAngle4 = KNEEDOWNMORE
         } else {
             newAngle4 = 0
@@ -353,7 +363,25 @@ namespace creatures {
     //% group="Standard offsets"
     //% weight=40
     export function setHipBackwardOffset(offset:number) {
-        HIPBACKWARD = offset
+        HIPBACK = offset
+    }
+
+    //% blockId=setHipForwardMoreOffset
+    //% block="set hip forwardmore offset %offset"
+    //% offset.min=-70 offset.max=70
+    //% group="Standard offsets"
+    //% weight=50
+    export function setHipForwardMoreOffset(offset: number) {
+        HIPFORWARDMORE = offset
+    }
+
+    //% blockId=setHipBackwardMoreOffset
+    //% block="set hip backwardmore offset %offset"
+    //% offset.min=-70 offset.max=70
+    //% group="Standard offsets"
+    //% weight=40
+    export function setHipBackwardMoreOffset(offset: number) {
+        HIPBACKMORE = offset
     }
 
     //% blockId=setKneeUpOffset
@@ -402,22 +430,18 @@ namespace creatures {
     }
 
 
-    let KNEEDOWN = 0
+    let KNEEUPMORE = -20
     let KNEEUP = 0
-    let HIPBACKWARD = 0
-    let HIPFORWARD = 0
-    let KNEEDOWNMORE = 0
-    let KNEEUPMORE = 0
+    let KNEEDOWN = 30
+    let KNEEDOWNMORE = 40
+    let HIPBACKMORE = 40
+    let HIPBACK = 20
+    let HIPFORWARD = 20
+    let HIPFORWARDMORE = 40
     let rawAngles: number[] = [-1,90,90,90,90,90,90,90,90]
     let newRawAngles: number[] = [-1, 90, 90, 90, 90, 90, 90, 90, 90]
     let deltas: number[] = [-1,0,0,0,0,0,0,0,0]
     let SMOOTHNESS = 20
-    HIPFORWARD = 20
-    HIPBACKWARD = 40
-    KNEEUPMORE = -20
-    KNEEUP = 0
-    KNEEDOWN = 30
-    KNEEDOWNMORE = 40
     for (let servo3 = 1; servo3 <= 8; servo3++) {
         limitedMove(servo3, rawAngles[servo3])
     }
