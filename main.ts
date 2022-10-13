@@ -337,14 +337,18 @@ namespace creatures {
     let KNEEUP = 0
     let HIPBACKWARD = 0
     let HIPFORWARD = 0
+    let KNEEDOWNMORE = 0
+    let KNEEUPMORE = 0
     let rawAngles: number[] = [-1,90,90,90,90,90,90,90,90]
     let newRawAngles: number[] = [-1, 90, 90, 90, 90, 90, 90, 90, 90]
     let deltas: number[] = [-1,0,0,0,0,0,0,0,0]
     let SMOOTHNESS = 20
     HIPFORWARD = 20
     HIPBACKWARD = 40
+    KNEEUPMORE = -20
     KNEEUP = 0
     KNEEDOWN = 30
+    KNEEDOWNMORE = 60
     for (let servo = 1; servo <= 8; servo++) {
         limitedMove(servo, rawAngles[servo])
     }
