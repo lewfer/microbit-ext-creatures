@@ -36,6 +36,8 @@ enum enumHipDirection {
 enum enumKneeDirection {
     up,
     down,
+    upmore,
+    downmore,
     middle
 }
 //% color="#ff7f50" icon="\uf188" block="Creatures"
