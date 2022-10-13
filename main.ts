@@ -1,17 +1,18 @@
+//% color="#ff7f50" icon="\uf06e" block="CrawlBot"
 namespace creatures {
 
     //% blockId=registerJoint
-    //% block="register joint %name for servo %servo"
+    //% block="register joint %joint for servo %servo"
     //% servo.min=1 servo.max=8
     //% servo.defl=1
     //% group="Setup"
     //% weight=50
-    export function registerJoint(name: string, servo: number) {
+    export function registerJoint(joint: string, servo: number) {
         //joints.push({name:name, servo:servo, angles:[]})
-        joints[name] = { servo: servo, angles: {} }
-        joints[name].angles = {}
+        joints[joint] = { servo: servo, angles: {} }
+        joints[joint].angles = {}
 
-        serial.writeLine("register joint " + name + "," + servo)
+        serial.writeLine("register joint " + joint + "," + servo)
     }
 
     //% blockId=definePosition
@@ -21,8 +22,10 @@ namespace creatures {
     //% group="Setup"
     //% weight=40
     export function definePosition(position: string, joint: string, angle: number) {
-        joints[joint].angles[position] = angle
+        let _joint = joints[joint]
+        if (_joint === undefined) throw ("Unregiestered joint " + joint)
 
+        _joint.angles[position] = angle
 
         serial.writeLine("define angle " + joints[joint].servo + "," + joints[joint].angles[position])
     }
@@ -33,8 +36,12 @@ namespace creatures {
     //% group="Movement"
     //% weight=50
     export function setJointPosition(joint: string, position: string) {
-        let servo = joints[joint].servo
-        let angle = joints[joint].angles[position]
+        let _joint = joints[joint]
+        if (_joint === undefined) throw ("Unregiestered joint " + joint)
+        let servo = _joint.servo
+        let angle = _joint.angles[position]
+        if (angle === undefined) throw ("Undefined position " + position)
+
         newRawAngles[servo] = 90 + angle
         serial.writeLine("setJointPosition " + servo + "," + newRawAngles[servo])
     }
@@ -45,7 +52,9 @@ namespace creatures {
     //% group="Movement"
     //% weight=40
     export function setJointAngle(joint: string, angle: number) {
-        let servo = joints[joint].servo
+        let _joint = joints[joint]
+        if (_joint === undefined) throw ("Unregiestered joint " + joint)
+        let servo = _joint.servo
         newRawAngles[servo] = 90 + angle
         serial.writeLine("setJointAngle " + servo + "," + newRawAngles[servo])
     }
@@ -91,7 +100,9 @@ namespace creatures {
     //% group="Movement"
     //% weight=20
     export function moveJointToPosition(joint: string, position: string) {
-        let servo = joints[joint].servo
+        let _joint = joints[joint]
+        if (_joint === undefined) throw ("Unregiestered joint " + joint)
+        let servo = _joint.servo
         setJointPosition(joint, position)
         smoothMove(servo)
     }
@@ -101,7 +112,9 @@ namespace creatures {
     //% group="Movement"
     //% weight=10
     export function moveJointDirectToPosition(joint: string, position: string) {
-        let servo = joints[joint].servo
+        let _joint = joints[joint]
+        if (_joint === undefined) throw ("Unregiestered joint " + joint)
+        let servo = _joint.servo
         setJointPosition(joint, position)
         smoothMove(servo)
     }
@@ -125,10 +138,12 @@ namespace creatures {
 
     function smoothMove(servo: number) {
         deltas[servo] = newRawAngles[servo] - rawAngles[servo]
+        //serial.writeLine("delta " + servo + "," + deltas[servo])
 
         // Ease servo to new position
         for (let idx22 = 0; idx22 <= SMOOTHNESS; idx22++) {
             easeServo(servo, rawAngles[servo], deltas[servo], idx22 / SMOOTHNESS)
+            //serial.writeLine(".")
             basic.pause(20)
         }
 
