@@ -1,15 +1,3 @@
-/*
-Raw angles are 0 to 180 and are what is passed to the servo.
-Angles are -90 to +90 and are used by the user through the interface.
- */
-/*enum enumFrontBack {
-    front,
-    back
-}
-enum enumSide {
-    left,
-    right
-}*/
 enum enumLeg {
     frontLeft,
     frontRight,
@@ -32,7 +20,6 @@ enum enumHipDirection {
     backward,
     middle
 }
-
 enum enumKneeDirection {
     up,
     down,
@@ -40,7 +27,6 @@ enum enumKneeDirection {
     downmore,
     middle
 }
-//% color="#ff7f50" icon="\uf188" block="Creatures"
 namespace creatures {
     //% blockId=moveHip
     //% block="set hip %leg %direction"
@@ -73,25 +59,25 @@ namespace creatures {
     //% group="Set servo positions"
     //% weight=40
     export function moveKnee(leg: enumLeg, direction: enumKneeDirection) {
-        let multiplier
+        let multiplier2
         serial.writeLine("setNewPosition " + leg + "," + direction)
-        let newAngle
-        multiplier = 1
+        let newAngle2
+        multiplier2 = 1
         if (leg == enumLeg.frontLeft || leg == enumLeg.backLeft) {
-            multiplier = 1
+            multiplier2 = 1
         } else {
-            multiplier = -1
+            multiplier2 = -1
         }
         if (direction == enumKneeDirection.up) {
-            newAngle = KNEEUP
+            newAngle2 = KNEEUP
         } else if (direction == enumKneeDirection.down) {
-            newAngle = KNEEDOWN
+            newAngle2 = KNEEDOWN
         } else {
-            newAngle = 0
+            newAngle2 = 0
         }
-        let idx = getIndex(leg, enumJoint.knee)
-        newRawAngles[idx] = 90 + newAngle * multiplier
-        serial.writeLine("set " + idx + "," + newRawAngles[idx])
+        let idx2 = getIndex(leg, enumJoint.knee)
+        newRawAngles[idx2] = 90 + newAngle2 * multiplier2
+        serial.writeLine("set " + idx2 + "," + newRawAngles[idx2])
     }
 
     //% blockId=smoothMoveHip
@@ -99,27 +85,27 @@ namespace creatures {
     //% group="Move servos"
     //% weight=50
     export function smoothMoveHip(leg: enumLeg, direction: enumHipDirection) {
-        let multiplier
+        let multiplier3
         serial.writeLine("moveHip " + leg + "," + direction)
-        let newAngle
-        multiplier = 1
+        let newAngle3
+        multiplier3 = 1
         if (leg == enumLeg.frontLeft || leg == enumLeg.backLeft) {
-            multiplier = 1
+            multiplier3 = 1
         } else {
-            multiplier = -1
+            multiplier3 = -1
         }
         if (direction == enumHipDirection.forward) {
-            newAngle = HIPFORWARD
+            newAngle3 = HIPFORWARD
         } else if (direction == enumHipDirection.backward) {
-            newAngle = HIPBACKWARD
+            newAngle3 = HIPBACKWARD
         } else {
-            newAngle = 0
+            newAngle3 = 0
         }
-        let idx = getIndex(leg, enumJoint.hip)
-        newRawAngles[idx] = 90 + newAngle * multiplier
+        let idx3 = getIndex(leg, enumJoint.hip)
+        newRawAngles[idx3] = 90 + newAngle3 * multiplier3
 
         // Now move it
-        smoothMove(idx)
+        smoothMove(idx3)
     }
 
     //% blockId=smoothMoveKnee
@@ -127,31 +113,31 @@ namespace creatures {
     //% group="Move servos"
     //% weight=40
     export function smoothMoveKnee(leg: enumLeg, direction: enumKneeDirection) {
-        let multiplier
+        let multiplier4
         serial.writeLine("setNewPosition " + leg + "," + direction)
-        let newAngle
-        multiplier = 1
+        let newAngle4
+        multiplier4 = 1
         if (leg == enumLeg.frontLeft || leg == enumLeg.backLeft) {
-            multiplier = 1
+            multiplier4 = 1
         } else {
-            multiplier = -1
+            multiplier4 = -1
         }
         if (direction == enumKneeDirection.up) {
-            newAngle = KNEEUP
+            newAngle4 = KNEEUP
         } else if (direction == enumKneeDirection.down) {
-            newAngle = KNEEDOWN
+            newAngle4 = KNEEDOWN
         } else if (direction == enumKneeDirection.upmore) {
-            newAngle = KNEEUPMORE
+            newAngle4 = KNEEUPMORE
         } else if (direction == enumKneeDirection.downmore) {
-            newAngle = KNEEDOWNMORE
+            newAngle4 = KNEEDOWNMORE
         } else {
-            newAngle = 0
+            newAngle4 = 0
         }
-        let idx = getIndex(leg, enumJoint.knee)
-        newRawAngles[idx] = 90 + newAngle * multiplier        
+        let idx4 = getIndex(leg, enumJoint.knee)
+        newRawAngles[idx4] = 90 + newAngle4 * multiplier4        
         
         // Now move it
-        smoothMove(idx)
+        smoothMove(idx4)
     }
 
 
@@ -162,17 +148,17 @@ namespace creatures {
     //% group="Set servo positions"
     //% weight=30
     export function moveHipAngle(leg: enumLeg, angle: number) {
-        let multiplier
+        let multiplier5
         serial.writeLine("moveHipAngle " + leg + "," + angle)
-        multiplier = 1
+        multiplier5 = 1
         if (leg == enumLeg.frontLeft || leg == enumLeg.backLeft) {
-            multiplier = 1
+            multiplier5 = 1
         } else {
-            multiplier = -1
+            multiplier5 = -1
         }
-        let idx = getIndex(leg, enumJoint.hip)
-        newRawAngles[idx] = 90+angle
-        serial.writeLine("set " + idx + "," + angle)
+        let idx5 = getIndex(leg, enumJoint.hip)
+        newRawAngles[idx5] = 90+angle
+        serial.writeLine("set " + idx5 + "," + angle)
     }
 
     //% blockId=moveKneeAngle
@@ -181,17 +167,17 @@ namespace creatures {
     //% group="Set servo positions"
     //% weight=20
     export function moveKneeAngle(leg: enumLeg, angle: number) {
-        let multiplier
+        let multiplier6
         serial.writeLine("moveKneeAngle " + leg + "," + angle)
-        multiplier = 1
+        multiplier6 = 1
         if (leg == enumLeg.frontLeft || leg == enumLeg.backLeft) {
-            multiplier = 1
+            multiplier6 = 1
         } else {
-            multiplier = -1
+            multiplier6 = -1
         }
-        let idx = getIndex(leg, enumJoint.knee)
-        newRawAngles[idx] = 90+angle
-        serial.writeLine("set " + idx + "," + angle)
+        let idx6 = getIndex(leg, enumJoint.knee)
+        newRawAngles[idx6] = 90+angle
+        serial.writeLine("set " + idx6 + "," + angle)
     }
 
     //% blockId=moveServoAngle
@@ -201,7 +187,7 @@ namespace creatures {
     //% group="Set servo positions"
     //% weight=10
     export function moveServoAngle(servo: number, angle: number) {
-        let multiplier
+        let multiplier7
         serial.writeLine("moveServoAngle " + servo + "," + angle)
         newRawAngles[servo] = 90+angle
     }
@@ -228,8 +214,8 @@ namespace creatures {
         deltas[servo] = newRawAngles[servo] - rawAngles[servo]
 
         // Ease servo to new position
-        for (let idx2 = 0; idx2 <= SMOOTHNESS; idx2++) {
-            easeServo(servo, rawAngles[servo], deltas[servo], idx2 / SMOOTHNESS)
+        for (let idx22 = 0; idx22 <= SMOOTHNESS; idx22++) {
+            easeServo(servo, rawAngles[servo], deltas[servo], idx22 / SMOOTHNESS)
             basic.pause(20)
         }
 
@@ -257,9 +243,9 @@ namespace creatures {
 
         //serial.writeLine("delta " + rawAngles[1] + " " + newRawAngles[1] + " " + deltas[1] )
         // Ease servos to their new position
-        for (let idx2 = 0; idx2 <= SMOOTHNESS; idx2++) {
+        for (let idx23 = 0; idx23 <= SMOOTHNESS; idx23++) {
             for (let servo=1; servo<=8; servo++) {
-                easeServo(servo, rawAngles[servo], deltas[servo], idx2 / SMOOTHNESS)
+                easeServo(servo, rawAngles[servo], deltas[servo], idx23 / SMOOTHNESS)
             }
             //limitedMove(1, rawAngles[1])
             //let easePosition = easeServo(1, rawAngles[1], deltas[1], idx / numSteps)
@@ -275,35 +261,35 @@ namespace creatures {
 
 
     function getIndex(leg: enumLeg, joint: enumJoint) {
-        let idx3=0;
+        let idx32=0;
         if (leg == enumLeg.frontLeft) {
             if (joint == enumJoint.hip) {
-                idx3 = 1
+                idx32 = 1
             } else {
-                idx3 = 2
+                idx32 = 2
             }
         }
         else if (leg == enumLeg.frontRight) {
             if (joint == enumJoint.hip) {
-                idx3 = 3
+                idx32 = 3
             } else {
-                idx3 = 4
+                idx32 = 4
             }
         }
         else if (leg == enumLeg.backLeft) {
             if (joint == enumJoint.hip) {
-                idx3 = 5
+                idx32 = 5
             } else {
-                idx3 = 6
+                idx32 = 6
             }
         } else if (leg == enumLeg.backRight) {
             if (joint == enumJoint.hip) {
-                idx3 = 7
+                idx32 = 7
             } else {
-                idx3 = 8
+                idx32 = 8
             }
         }
-        return idx3
+        return idx32
     }
 
     function limitedMove (servo: number, rawAngle: number) {
@@ -410,8 +396,8 @@ namespace creatures {
     KNEEUP = 0
     KNEEDOWN = 30
     KNEEDOWNMORE = 60
-    for (let servo = 1; servo <= 8; servo++) {
-        limitedMove(servo, rawAngles[servo])
+    for (let servo3 = 1; servo3 <= 8; servo3++) {
+        limitedMove(servo3, rawAngles[servo3])
     }
     basic.forever(function () {
         
