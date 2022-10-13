@@ -435,9 +435,9 @@ namespace creatures {
     let KNEEDOWN = 30
     let KNEEDOWNMORE = 40
     let HIPBACKMORE = 40
-    let HIPBACK = 20
+    let HIPBACK = 30
     let HIPFORWARD = 20
-    let HIPFORWARDMORE = 40
+    let HIPFORWARDMORE = -20
     let rawAngles: number[] = [-1,90,90,90,90,90,90,90,90]
     let newRawAngles: number[] = [-1, 90, 90, 90, 90, 90, 90, 90, 90]
     let deltas: number[] = [-1,0,0,0,0,0,0,0,0]
