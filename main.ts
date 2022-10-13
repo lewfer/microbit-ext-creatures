@@ -42,7 +42,7 @@ namespace creatures {
         let angle = _joint.angles[position]
         if (angle === undefined) throw ("Undefined position " + position)
 
-        newRawAngles[servo] = 90 + angle
+        newRawAngles[servo] = 90 - angle
         serial.writeLine("setJointPosition " + servo + "," + newRawAngles[servo])
     }
 
@@ -55,7 +55,7 @@ namespace creatures {
         let _joint = joints[joint]
         if (_joint === undefined) throw ("Unregiestered joint " + joint)
         let servo = _joint.servo
-        newRawAngles[servo] = 90 + angle
+        newRawAngles[servo] = 90 - angle
         serial.writeLine("setJointAngle " + servo + "," + newRawAngles[servo])
     }
 
@@ -163,7 +163,7 @@ namespace creatures {
             newRawAngle = rawAngle
         }
 
-        //serial.writeLine("limitedMove " + servo + "," + newRawAngle)
+        serial.writeLine("limitedMove " + servo + "," + newRawAngle)
         if (servo == 1) {
             Kitronik_Robotics_Board.servoWrite(Kitronik_Robotics_Board.Servos.Servo1, newRawAngle)
         } else if (servo == 2) {
