@@ -1,4 +1,4 @@
-//% color="#ff7f50" icon="\uf06e" block="CrawlBot"
+//% color="#ff7f50" icon="\uf188" block="Creatures"
 namespace creatures {
 
     //% blockId=registerJoint
